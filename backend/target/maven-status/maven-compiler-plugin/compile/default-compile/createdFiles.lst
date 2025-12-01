@@ -1,0 +1,13 @@
+com/mercadinho/model/ProductCategory.class
+com/mercadinho/config/WebConfig.class
+com/mercadinho/config/DataSeeder.class
+com/mercadinho/service/ProductService.class
+com/mercadinho/exception/ResourceNotFoundException.class
+com/mercadinho/controller/ProductController.class
+com/mercadinho/dto/QuantityUpdateRequest.class
+com/mercadinho/dto/ProductRequest.class
+com/mercadinho/model/Product.class
+com/mercadinho/repository/ProductRepository.class
+com/mercadinho/MercadinhoAdminApplication.class
+com/mercadinho/exception/ApiExceptionHandler.class
+com/mercadinho/dto/ProductResponse.class

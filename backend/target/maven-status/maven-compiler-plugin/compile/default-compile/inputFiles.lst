@@ -1,0 +1,13 @@
+/home/samuel/bauru/backend/src/main/java/com/mercadinho/config/DataSeeder.java
+/home/samuel/bauru/backend/src/main/java/com/mercadinho/repository/ProductRepository.java
+/home/samuel/bauru/backend/src/main/java/com/mercadinho/MercadinhoAdminApplication.java
+/home/samuel/bauru/backend/src/main/java/com/mercadinho/dto/ProductRequest.java
+/home/samuel/bauru/backend/src/main/java/com/mercadinho/model/ProductCategory.java
+/home/samuel/bauru/backend/src/main/java/com/mercadinho/config/WebConfig.java
+/home/samuel/bauru/backend/src/main/java/com/mercadinho/model/Product.java
+/home/samuel/bauru/backend/src/main/java/com/mercadinho/exception/ResourceNotFoundException.java
+/home/samuel/bauru/backend/src/main/java/com/mercadinho/dto/QuantityUpdateRequest.java
+/home/samuel/bauru/backend/src/main/java/com/mercadinho/controller/ProductController.java
+/home/samuel/bauru/backend/src/main/java/com/mercadinho/service/ProductService.java
+/home/samuel/bauru/backend/src/main/java/com/mercadinho/dto/ProductResponse.java
+/home/samuel/bauru/backend/src/main/java/com/mercadinho/exception/ApiExceptionHandler.java
