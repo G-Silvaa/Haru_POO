@@ -2,6 +2,7 @@ package com.mercadinho.config;
 
 import com.mercadinho.security.JwtAuthenticationFilter;
 import com.mercadinho.service.CustomUserDetailsService;
+import org.springframework.http.HttpMethod;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -40,6 +41,9 @@ public class SecurityConfig {
                                 "/api-docs/**",
                                 "/actuator/health"
                         ).permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/orders/**").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())

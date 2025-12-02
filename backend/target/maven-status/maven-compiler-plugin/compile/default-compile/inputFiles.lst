@@ -1,13 +1,21 @@
+/home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/dto/OrderItemResponse.java
+/home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/dto/OrderItemRequest.java
+/home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/dto/OrderStatusUpdateRequest.java
 /home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/repository/UserRepository.java
 /home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/dto/AuthResponse.java
 /home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/model/Product.java
+/home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/repository/OrderRepository.java
 /home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/model/User.java
+/home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/dto/OrderResponse.java
 /home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/exception/ResourceNotFoundException.java
 /home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/dto/RegisterRequest.java
 /home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/service/ProductService.java
 /home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/security/JwtAuthenticationFilter.java
+/home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/model/Order.java
 /home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/exception/BadRequestException.java
+/home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/model/OrderItem.java
 /home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/dto/ProductResponse.java
+/home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/dto/OrderRequest.java
 /home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/service/AuthService.java
 /home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/config/SecurityConfig.java
 /home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/exception/ApiExceptionHandler.java
@@ -17,6 +25,7 @@
 /home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/repository/ProductRepository.java
 /home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/MercadinhoAdminApplication.java
 /home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/dto/QuantityUpdateRequest.java
+/home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/service/OrderService.java
 /home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/config/OpenApiConfig.java
 /home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/model/ProductCategory.java
 /home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/dto/PageResponse.java
@@ -24,4 +33,5 @@
 /home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/config/DataSeeder.java
 /home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/dto/AuthRequest.java
 /home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/controller/ProductController.java
+/home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/controller/OrderController.java
 /home/genilton/Haru_POO/backend/src/main/java/com/mercadinho/service/JwtService.java
