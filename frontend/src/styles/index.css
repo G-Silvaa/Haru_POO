@@ -573,14 +573,23 @@ header.top-bar {
   padding: 10px 14px;
   border-radius: 10px;
   cursor: pointer;
-  background: #ffebe5;
-  color: #d43a1e;
+  background: linear-gradient(135deg, #ff7050, #ff4d2d);
+  color: white;
   font-weight: 700;
+  box-shadow: 0 10px 24px rgba(255, 77, 45, 0.35);
 }
 
 .order-actions .ghost {
   background: #f4f4f6;
   color: #6c6c80;
+  box-shadow: none;
+  border: 1px solid #e5e5ef;
+}
+
+.order-actions .ghost.danger {
+  background: #ffe9e6;
+  color: #c53030;
+  border-color: #ffd0c8;
 }
 
 .pill {

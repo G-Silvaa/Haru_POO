@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import Header from './components/Header.jsx';
+import { FaTrash } from 'react-icons/fa';
 import LoginPanel from './components/LoginPanel.jsx';
 import HighlightCard from './components/HighlightCard.jsx';
 import ProductTable from './components/ProductTable.jsx';
@@ -47,6 +48,7 @@ const App = () => {
   const [orderStatusFilter, setOrderStatusFilter] = useState('');
   const [adminTab, setAdminTab] = useState(() => localStorage.getItem('adminTab') || 'products'); // products | orders
   const [confirmOrderAction, setConfirmOrderAction] = useState(null);
+  const [confirmOrderDelete, setConfirmOrderDelete] = useState(null);
 
   useEffect(() => {
     productService.setAuthToken(token);
@@ -314,6 +316,35 @@ const App = () => {
     } catch (error) {
       console.error(error);
       setShopMessage('Não foi possível finalizar o pedido.');
+    }
+  };
+
+  const handleOrderAction = async () => {
+    if (!confirmOrderAction) return;
+    const { order, status } = confirmOrderAction;
+    try {
+      const updated = await orderService.updateStatus(order.id, status);
+      setOrders((current) => current.map((o) => (o.id === updated.id ? updated : o)));
+      setMessage(`Pedido #${updated.id} marcado como ${statusLabel[updated.status]}.`);
+    } catch (error) {
+      console.error(error);
+      setMessage('Não foi possível atualizar o pedido.');
+    } finally {
+      setConfirmOrderAction(null);
+    }
+  };
+
+  const handleOrderDelete = async () => {
+    if (!confirmOrderDelete) return;
+    try {
+      await orderService.remove(confirmOrderDelete.id);
+      setOrders((current) => current.filter((o) => o.id !== confirmOrderDelete.id));
+      setMessage(`Pedido #${confirmOrderDelete.id} removido.`);
+    } catch (error) {
+      console.error(error);
+      setMessage('Não foi possível remover o pedido.');
+    } finally {
+      setConfirmOrderDelete(null);
     }
   };
 
@@ -674,6 +705,9 @@ const App = () => {
                       <div className="order-actions">
                         <button onClick={() => setConfirmOrderAction({ order, status: 'PAID' })}>Marcar pago</button>
                         <button className="ghost" onClick={() => setConfirmOrderAction({ order, status: 'REJECTED' })}>Rejeitar</button>
+                        <button className="ghost danger" onClick={() => setConfirmOrderDelete(order)}>
+                          <FaTrash />
+                        </button>
                       </div>
                     </div>
                   ))}
@@ -741,28 +775,27 @@ const App = () => {
           </div>
         </div>
       )}
+
+      {confirmOrderDelete && (
+        <div className="modal-backdrop">
+          <div className="modal">
+            <header>
+              <h3>Remover pedido</h3>
+              <button onClick={() => setConfirmOrderDelete(null)} className="ghost">X</button>
+            </header>
+            <p>
+              Deseja remover o pedido <strong>#{confirmOrderDelete.id}</strong> de{' '}
+              <strong>{confirmOrderDelete.customerName}</strong>?
+            </p>
+            <div className="modal-actions">
+              <button className="ghost" onClick={() => setConfirmOrderDelete(null)}>Cancelar</button>
+              <button className="primary" onClick={handleOrderDelete}>Remover</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default App;
-  const handleOrderAction = async () => {
-    if (!confirmOrderAction) return;
-    const { order, status } = confirmOrderAction;
-    try {
-      if (status === 'REJECTED') {
-        await orderService.remove(order.id);
-        setOrders((current) => current.filter((o) => o.id !== order.id));
-        setMessage(`Pedido #${order.id} removido.`);
-      } else {
-        const updated = await orderService.updateStatus(order.id, status);
-        setOrders((current) => current.filter((o) => o.id !== updated.id));
-        setMessage(`Pedido #${updated.id} marcado como ${statusLabel[updated.status]}.`);
-      }
-    } catch (error) {
-      console.error(error);
-      setMessage('Não foi possível atualizar o pedido.');
-    } finally {
-      setConfirmOrderAction(null);
-    }
-  };
