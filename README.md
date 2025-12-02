@@ -1,15 +1,15 @@
 # Mercadinho do Povo – Admin
 
-Aplicação full-stack para gestão de estoque da mercearia com backend Spring Boot + MySQL e frontend React inspirado no layout fornecido. O painel permite listar, cadastrar, editar e ajustar rapidamente o estoque de produtos.
+Aplicação full-stack para gestão de estoque da mercearia com backend Spring Boot + MySQL e frontend React inspirado no layout fornecido. O painel permite listar, cadastrar, editar e ajustar rapidamente o estoque de produtos, agora com autenticação JWT.
 
 ## Credenciais
 
-A tela de login funciona apenas como bloqueio visual (sem autenticação real). Utilize o usuário padrão abaixo:
+Autenticação real via JWT. Usuário padrão (seed):
 
 - **Usuário:** `admin`
-- **Senha:** `123456`
+- **Senha:** `admin123`
 
-> Qualquer combinação não vazia também é aceita, mas estas credenciais são recomendadas para documentação.
+Você pode cadastrar novos usuários em `/api/auth/register` ou obter token em `/api/auth/login`.
 
 ## Stack
 
@@ -26,6 +26,11 @@ A tela de login funciona apenas como bloqueio visual (sem autenticação real). 
 ## Backend
 
 Configurações principais em `backend/src/main/resources/application.properties`. O datasource aponta para `jdbc:mysql://localhost:3306/mercadinho_admin` e cria o banco automaticamente.
+
+### Swagger / OpenAPI
+
+- Swagger UI: `http://localhost:8081/swagger-ui.html`
+- Documentação JSON: `http://localhost:8081/api-docs`
 
 ### Rodando o backend
 
@@ -44,6 +49,23 @@ Ao iniciar, um `DataSeeder` popula alguns produtos demo. Ajuste/disable via `bac
 - `PUT /{id}` – atualiza produto
 - `PATCH /{id}/quantity` – altera quantidade
 - `DELETE /{id}` – remove produto
+
+### Autenticação (`/api/auth`)
+
+- `POST /register` — cria usuário (campos `username`, `password`)
+- `POST /login` — retorna token JWT (campos `username`, `password`)
+
+Inclua o header `Authorization: Bearer <token>` para acessar `/api/products/**`.
+
+### Variáveis úteis
+
+O backend lê variáveis de ambiente para facilitar deploy e Docker:
+
+- `DB_HOST` / `DB_PORT` / `DB_NAME`
+- `DB_USERNAME` / `DB_PASSWORD`
+- `APP_CORS_ALLOWED_ORIGINS` (origens separadas por vírgula)
+- `SERVER_PORT` (porta do servidor)
+- `JWT_SECRET` e `JWT_EXPIRATION_MS` (token)
 
 ## Frontend
 
@@ -68,3 +90,15 @@ Acesse `http://localhost:5173`. Após o “login”, você verá o dashboard com
 Para visualizar a organização completa dos diretórios e arquivos, consulte [`STRUCTURE.md`](STRUCTURE.md).
 
 Sinta-se à vontade para evoluir com autenticação real, dashboards adicionais ou relatórios.
+
+## Docker
+
+Conteinerização pronta para backend + MySQL. Rode a partir da raiz do repositório:
+
+```bash
+docker compose up --build
+```
+
+- API em `http://localhost:8081` (Swagger em `/swagger-ui.html`) — altere a porta com `HOST_API_PORT` se quiser outro valor.
+- MySQL exposto em `localhost:3307` (ou `HOST_DB_PORT`) com banco `mercadinho_admin`, usuário/senha `mercadinho`
+- O seeder é executado automaticamente (profiles diferentes de `prod`).

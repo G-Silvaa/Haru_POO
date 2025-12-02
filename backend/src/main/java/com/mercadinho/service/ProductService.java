@@ -2,9 +2,12 @@ package com.mercadinho.service;
 
 import com.mercadinho.dto.ProductRequest;
 import com.mercadinho.dto.ProductResponse;
+import com.mercadinho.dto.PageResponse;
 import com.mercadinho.exception.ResourceNotFoundException;
 import com.mercadinho.model.Product;
+import com.mercadinho.model.ProductCategory;
 import com.mercadinho.repository.ProductRepository;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,10 +24,11 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public List<ProductResponse> findAll() {
-        return repository.findAll().stream()
-                .map(ProductResponse::from)
-                .toList();
+    public PageResponse<ProductResponse> findAll(String search, String category, Pageable pageable) {
+        String term = search == null ? "" : search;
+        var categoryEnum = category != null && !category.isBlank() ? ProductCategory.valueOf(category) : null;
+        return PageResponse.from(repository.search(term, categoryEnum, pageable)
+                .map(ProductResponse::from));
     }
 
     @Transactional(readOnly = true)

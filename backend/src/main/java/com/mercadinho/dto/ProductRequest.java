@@ -1,6 +1,7 @@
 package com.mercadinho.dto;
 
 import com.mercadinho.model.ProductCategory;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
@@ -10,28 +11,35 @@ import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 
+@Schema(description = "Dados para criar ou atualizar um produto")
 public class ProductRequest {
 
     @NotBlank
     @Size(max = 120)
+    @Schema(description = "Nome do produto", example = "Arroz Tio João 1kg")
     private String name;
 
     @NotNull
+    @Schema(description = "Categoria do produto", example = "ALIMENTO")
     private ProductCategory category;
 
     @NotNull
     @DecimalMin(value = "0.0", inclusive = true)
     @Digits(integer = 10, fraction = 2)
+    @Schema(description = "Preço de venda", example = "5.90")
     private BigDecimal price;
 
     @NotNull
     @Min(0)
+    @Schema(description = "Quantidade em estoque", example = "20")
     private Integer quantity;
 
     @Size(max = 255)
+    @Schema(description = "URL de foto do produto", example = "https://exemplo.com/foto.png")
     private String photoUrl;
 
     @Size(max = 500)
+    @Schema(description = "Descrição ou observações", example = "Pacote de 1kg, arroz tipo 1.")
     private String description;
 
     public String getName() {

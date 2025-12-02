@@ -3,8 +3,10 @@ package com.mercadinho.config;
 import com.mercadinho.model.Product;
 import com.mercadinho.model.ProductCategory;
 import com.mercadinho.repository.ProductRepository;
+import com.mercadinho.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -14,15 +16,45 @@ import java.util.List;
 @Profile("!prod")
 public class DataSeeder implements CommandLineRunner {
 
-    private final ProductRepository repository;
+    private final ProductRepository productRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public DataSeeder(ProductRepository repository) {
-        this.repository = repository;
+    public DataSeeder(ProductRepository productRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.productRepository = productRepository;
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public void run(String... args) {
-        if (repository.count() > 0) {
+        seedUser();
+        seedProducts();
+    }
+
+    private Product createProduct(String name, ProductCategory category, BigDecimal price, int qty, String photoUrl) {
+        Product product = new Product();
+        product.setName(name);
+        product.setCategory(category);
+        product.setPrice(price);
+        product.setQuantity(qty);
+        product.setPhotoUrl(photoUrl);
+        product.setDescription("Produto selecionado especialmente para o Mercadinho do Povo.");
+        return product;
+    }
+
+    private void seedUser() {
+        if (userRepository.existsByUsername("admin")) {
+            return;
+        }
+        com.mercadinho.model.User user = new com.mercadinho.model.User();
+        user.setUsername("admin");
+        user.setPassword(passwordEncoder.encode("admin123"));
+        userRepository.save(user);
+    }
+
+    private void seedProducts() {
+        if (productRepository.count() > 0) {
             return;
         }
 
@@ -37,17 +69,6 @@ public class DataSeeder implements CommandLineRunner {
                         "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=200&q=60")
         );
 
-        repository.saveAll(samples);
-    }
-
-    private Product createProduct(String name, ProductCategory category, BigDecimal price, int qty, String photoUrl) {
-        Product product = new Product();
-        product.setName(name);
-        product.setCategory(category);
-        product.setPrice(price);
-        product.setQuantity(qty);
-        product.setPhotoUrl(photoUrl);
-        product.setDescription("Produto selecionado especialmente para o Mercadinho do Povo.");
-        return product;
+        productRepository.saveAll(samples);
     }
 }

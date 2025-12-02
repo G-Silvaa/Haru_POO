@@ -1,11 +1,11 @@
-import { FaPen, FaShoppingCart } from 'react-icons/fa';
+import { FaPen, FaTrash } from 'react-icons/fa';
 
 const currencyFormatter = new Intl.NumberFormat('pt-BR', {
   style: 'currency',
   currency: 'BRL'
 });
 
-const ProductTable = ({ products, loading, onEdit, onQuantityChange, onQuickSale }) => {
+const ProductTable = ({ products, loading, onEdit, onQuantityChange, onQuickSale, onDeleteRequest }) => {
   const handleDecrease = (product) => {
     if (product.quantity === 0) return;
     onQuantityChange(product, product.quantity - 1);
@@ -59,8 +59,8 @@ const ProductTable = ({ products, loading, onEdit, onQuantityChange, onQuickSale
                 </td>
                 <td>
                   <div className="action-buttons">
-                    <button type="button" className="cart" title="Venda rápida" onClick={() => onQuickSale(product)}>
-                      <FaShoppingCart />
+                    <button type="button" className="cart" title="Remover itens" onClick={() => onDeleteRequest(product)}>
+                      <FaTrash />
                     </button>
                     <button type="button" className="edit" title="Editar produto" onClick={() => onEdit(product)}>
                       <FaPen />
